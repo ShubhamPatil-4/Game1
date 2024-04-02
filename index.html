@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <style type="text/css">
+        *{
+            padding: 0px;
+            margin: 0px;
+        }
+        .game-cont{
+            height: 200px;
+            width: 500px;
+            border: 2px solid black;
+            background-image: url("https://www.pikpng.com/pngl/m/39-399073_free-png-download-flying-birds-gif-transparent-png.png");
+            background-size: 30%;
+            background-repeat: repeat-x;
+        }
+
+        .dino{
+            height: 50px;
+            width: 20px;
+            position: relative;
+            top: 150px;
+            background-image: url("https://i.pinimg.com/originals/86/ec/b4/86ecb4855009dde7431a5d12708ffb17.gif");
+            background-position: center;
+            background-size: 270%;
+        }
+
+        .jump{
+            animation: jump 0.5s ease-in-out 1;
+        }
+        @keyframes jump{
+            50%{
+                top:100px;
+            }
+        }
+
+        .block{
+            height: 20px;
+            width: 20px;
+            background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhl-0VWwWtKPR6xEKlNsVllxZ-smLF1KU3EQ&s");
+            background-position: center;
+            background-size: 150%;
+            position: relative;
+            top: 130px;
+            left: 480px;
+            animation: move 4s linear infinite;
+        }
+
+        @keyframes move{
+            0%{
+                left: 480px;
+            }
+            100%{
+                left: -30px;
+            }
+        }
+
+        #score{
+            position: fixed;
+            top: 10px;
+            left: 20px;
+        }
+    </style>
+</head>
+<body >
+    <div class="game-cont">
+        <div class="dino" onclick="addJump()" ></div>
+        <div class="block" ></div>
+    </div>
+    <div id="score">0</div>
+<script type="text/javascript">
+    let score = 0;
+    let scoreDiv = document.getElementById("score");
+    scoreDiv.innerHTML = 'score: ' + score;
+
+    function addJump() {
+        let dino = document.querySelector(".dino");
+        if (!dino.classList.contains("jump")) {
+            dino.classList.add("jump");
+            setTimeout(() => {
+                dino.classList.remove("jump");
+            }, 500);
+        }
+    }
+
+    let gameOver = setInterval(function() {
+        let dino = document.querySelector(".dino");
+        let block = document.querySelector(".block");
+        let dinoDim = parseInt(window.getComputedStyle(dino).getPropertyValue("top"));
+        let blockDim = parseInt(window.getComputedStyle(block).getPropertyValue("left"));
+        scoreDiv.innerHTML = 'score: ' + score++;
+        if (blockDim > 0 && blockDim < 20 && dinoDim >= 120) {
+            clearInterval(gameOver);
+            alert("GAME OVER, SCORE: " + score);
+        }
+    }, 10);
+</script>
+</body>
+</html>
